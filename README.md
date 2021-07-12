@@ -1,4 +1,7 @@
 # todoApp
 
-paiza の todoアプリケーション構築を見て作ります。
-その後AWSに乗っけます
+##アプリケーションの目的
+****Flaskの構造の理解
+*loggerをつかってログの出力
+*sqlalchemyを使ったmysqlの連携
+*AWSに乗っける
