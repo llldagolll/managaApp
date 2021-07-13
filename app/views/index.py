@@ -4,7 +4,7 @@ from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flaskext.markdown import Markdown
 from app.models.post import Post
-
+import logging
 
 
 #export FLASK_APP=app.py
@@ -30,7 +30,7 @@ app = Blueprint('index', __name__, url_prefix='/')
 @app.route('/')
 def list():
 
-    message = 'Hello paiza memo'
+    message = 'Hello memo'
     posts = Post.query.all()
     print(posts)
 
@@ -47,13 +47,14 @@ def show_post(id):
 
 @app.route('/new')
 def new_post():
-
+    
     message = 'New memo'
     return render_template('new.html', message=message)
 
 @app.route('/create', methods=['POST'])
 def create_post():
 
+        
     message = 'Create new memo'
 
     new_post = Post()
@@ -62,7 +63,10 @@ def create_post():
     db.session.add(new_post)
     db.session.commit()
 
+   
     post = Post.query.get(new_post.id)
+
+    logger.info('新しいメモを作成しました')
 
 
     return render_template('show.html', message=message, post=post)
