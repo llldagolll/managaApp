@@ -1,4 +1,4 @@
-# todoApp
+# memoApp
 
 ## アプリケーションの目的
 
@@ -6,6 +6,29 @@
 * loggerをつかってログの出力
 * sqlalchemyを使ったmysqlの連携
 * AWSに乗っける
+
+
+####Structure
+```
+~/manageApp
+        |--- manage.py
+        |--- config.py
+        |--- /app
+             |---__init__.py
+             |---/modeles
+                 |-- __init__.py
+                 |-- post.py
+             |--- /views
+                  |--- __init__.py
+                  |--- index.py
+             |--- /templates
+                  |--- layout.html
+                  |--- list.html
+                  |--- new.html
+                  |--- show.html
+                  |--- edit.html
+```
+
 
 
 
@@ -107,4 +130,4 @@ $ docker-compose run -e FLASK_ENV=test web nosetests -s
 ```
 # Connect postgresql database
 $ docker exec -it flask-largeapp-sample_db_1 psql -U postgres flask_sampleapp_dev
-```]))))
+```
