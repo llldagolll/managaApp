@@ -18,7 +18,7 @@ class Post(db.Model):
 
 
     def getPostDict():
-        return {'title':'', 'content', ''}
+        return {'title': '', 'content': ''}
 
     def getPostList():
         #select * from posts
@@ -55,3 +55,72 @@ class Post(db.Model):
             logger.error('insert exception registPost message:{0}'.format(e.with_traceback(tb)))
             db.session.rollback()
         return result
+
+    def update(post):
+
+        logger.debug('--- Post update start ---')
+        reulst = False
+        
+        try:
+            update_post = db.session.query(Post).filter(Post.id==post['id']).first()
+
+
+            if post['title'] != None:
+                update_post.title = post['title']
+
+
+            if post['content'] != None:
+                update_post.content = post['content']
+
+            logger.info('--- Post update update_post ---')
+            #insert into posts(title, content) values(...)
+            db.session.add(update_post)
+            db.session.commit()
+            result = True
+
+        except Exception as e:
+            tb = sys.exc_info()[2]
+            logger.error('--- Post update exception message:{0}'.format(e.with_traceback(tb)))
+            db.session.rollback()
+
+
+        logger.info('--- Post update end')
+        return result
+
+
+    def delete(id):
+
+        logger.info('--- Post delete start ---')
+        result = False
+
+
+        try:
+            delete_post = db.session.query(Post).filter(Post.id==id).first()
+
+            logger.info('--- Post delete record')
+            db.session.delete(delete_post)
+            db.session.commit()
+            result = True
+
+        except Exception as e:
+            tb = sys.exc_info()[2]
+            logger.error('--- Entry delete message:{0}'.format(e.with_traceback(tb)))
+            db.session.rollback()
+
+
+        logger.debug('--- Post delete end ---')
+        return result
+
+
+
+
+
+
+
+
+
+
+
+
+
+

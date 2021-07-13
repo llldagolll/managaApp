@@ -26,6 +26,10 @@ app = Blueprint('index', __name__, url_prefix='/')
 #    title = db.Column(db.Text())
 #    content = db.Column(db.Text())
 
+logger = logging.getLogger(__name__)
+post = Post.getPostDict()
+
+
 
 @app.route('/')
 def list():
@@ -54,6 +58,7 @@ def new_post():
 @app.route('/create', methods=['POST'])
 def create_post():
 
+   
         
     message = 'Create new memo'
 
@@ -63,9 +68,15 @@ def create_post():
 #    db.session.add(new_post)
 #    db.session.commit()
 
+    post = Post.getPostDict()
 
+    post['title'] = request.form['title']
+    post['content'] = request.form['content']
    
-    post = Post.query.get(new_post.id)
+    Post.registPost(post)
+
+
+#    post = Post.query.get(new_post.id)
 
     logger.info('新しいメモを作成しました')
 
@@ -77,11 +88,17 @@ def create_post():
 def delete_post(id):
 
     message = 'Delete Your memo ' + str(id)
-    post = Post.query.get(id)
-    db.session.delete(post)
-    db.session.commit()
+#    post = Post.query.get(id)
+#    db.session.delete(post)
+#    db.session.commit()
+#
+
+
+    Post.delete(id)
 
     posts = Post.query.all()
+
+
     return render_template('list.html', message=message, posts=posts)
 
 
@@ -99,10 +116,16 @@ def update_post(id):
 
     message = 'Update your memo' + str(id)
 
-    post = Post.query.get(id)
-    post.title = request.form['title']
-    post.content = request.form['content']
-    db.session.commit()
+#    post = Post.query.get(id)
+#    post.title = request.form['title']
+#    post.content = request.form['content']
+#    db.session.commit()
 
+    post['id'] = id
+    post['title'] = request.form['title']
+    post['content'] = request.form['content']
+    Post.update(post)
 
-    return render_template('show.html', message=message, post=post)
+    posts = Post.query.get(id)
+
+    return render_template('show.html', message=message, post=posts)
