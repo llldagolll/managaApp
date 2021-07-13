@@ -57,11 +57,12 @@ def create_post():
         
     message = 'Create new memo'
 
-    new_post = Post()
-    new_post.title = request.form['title']
-    new_post.content = request.form['content']
-    db.session.add(new_post)
-    db.session.commit()
+#    new_post = Post()
+#    new_post.title = request.form['title']
+#    new_post.content = request.form['content']
+#    db.session.add(new_post)
+#    db.session.commit()
+
 
    
     post = Post.query.get(new_post.id)
